@@ -1,0 +1,21 @@
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #41414150;
+}
+
+.navbar-action-link{
+    display: flex;
+    text-decoration : none;
+    margin: 20px 30px 20px 0;
+    color: beige;
+}
+.navbar-action{
+    display: flex;
+    justify-content: right;
+}
+.navbar-items{
+    display: flex;
+    margin: auto;
+}
