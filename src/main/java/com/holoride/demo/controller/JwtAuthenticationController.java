@@ -46,6 +46,7 @@ public class JwtAuthenticationController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
+            LOGGER.info("User is authenticated");
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("You are not authorized");
         }
