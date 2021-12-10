@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  demoapp-service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
