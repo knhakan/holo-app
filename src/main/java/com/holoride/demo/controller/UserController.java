@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     UserRepository repository;
 
-    @PostMapping(value = "/add", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/api/add", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> addUser(@RequestBody User user) {
         User addedUser;
         if(userDetailService.doesUserExist(user.getUsername())){
@@ -48,7 +48,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> userList = userDetailService.getAllUsers();
         if  (userList.isEmpty()) {
@@ -58,7 +58,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/api/users/{userId}")
     public ResponseEntity<Optional<User>> findUserById(@PathVariable("userId") long userId, Principal principal) {
             Optional<User> user = userDetailService.findUserById(userId);
         if  (user.isEmpty()) {
@@ -71,7 +71,7 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/users/{userId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/api/users/{userId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User userToUpdate,Principal principal) {
         if(userDetailService.isUserAllowed(userId,principal)){
         User updatedUser = userDetailService.updateUser(userId, userToUpdate);
@@ -82,7 +82,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/users/{userId}")
+    @DeleteMapping(value = "/api/users/{userId}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long userId, Principal principal) {
         boolean isRemoved;
         if(userDetailService.isUserAllowed(userId,principal)){
@@ -97,5 +97,8 @@ public class UserController {
         }
     }
 
-
+    @GetMapping(value ="/")
+    public String welcomeUser() {
+        return "welcome to the server";
+    }
 }
