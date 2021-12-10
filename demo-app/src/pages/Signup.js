@@ -24,6 +24,7 @@ function Signup() {
         }, { headers: { 'Authorization': '' } })
             .then(res => {
                 setTimeout(function () { navigate('/login'); }, 3000);
+                setMessage("User has been saved")
             })
             .catch(error => {
                 if (error.response.status === 409) {
@@ -67,7 +68,7 @@ function Signup() {
 
 
                     <input type="submit" value="Sign up" className='signup-button' />
-                    <div className='signup-error-message'>
+                    <div className='signup-message'>
                         {message}
                     </div>
                 </form>

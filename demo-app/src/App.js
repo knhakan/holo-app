@@ -4,10 +4,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import UserDetails from "./pages/UserDetails";
 import reducer, { initialState } from "./reducer";
-import { StateProvider } from "./StateProvider";
+import { StateProvider,useStateValue } from "./StateProvider";
 import axios from 'axios';
 import React, { useEffect } from "react";
-import { useStateValue } from "./StateProvider";
 import { apiPrefix } from './env';
 
 function App() {

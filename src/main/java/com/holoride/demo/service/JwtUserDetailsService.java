@@ -25,7 +25,6 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public Long findCurrentUserId(String username) throws UsernameNotFoundException {
-        Long userId = userRepository.findIdByUsername(username);
-        return userId;
+        return userRepository.findIdByUsername(username);
     }
 }

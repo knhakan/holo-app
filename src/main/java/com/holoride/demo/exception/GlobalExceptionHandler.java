@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
 
-/**
- * @author anuragdhunna
- */
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -20,7 +18,7 @@ public class GlobalExceptionHandler {
         response.setErrorMessage(ex.getMessage());
         response.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<ExceptionResponse>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ResourceAlreadyExists.class)
@@ -30,7 +28,7 @@ public class GlobalExceptionHandler {
         response.setErrorMessage(ex.getMessage());
         response.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<ExceptionResponse>(response, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(CustomException.class)
@@ -40,7 +38,7 @@ public class GlobalExceptionHandler {
         response.setErrorMessage(ex.getMessage());
         response.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<ExceptionResponse>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
@@ -50,7 +48,7 @@ public class GlobalExceptionHandler {
         response.setErrorMessage(ex.getMessage());
         response.setTimestamp(LocalDateTime.now());
 
-        return new ResponseEntity<ExceptionResponse>(response, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
 }

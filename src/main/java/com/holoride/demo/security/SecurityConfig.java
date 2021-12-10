@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String ROLE1 = "ADMIN";
+    private static final String ROLE2 = "USER";
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
@@ -27,11 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/h2-console/**").permitAll() //just for test purpose
-                .antMatchers("/api/users").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/users").hasAnyRole(ROLE1, ROLE2)
+                .antMatchers("/api/user").hasAnyRole(ROLE1, ROLE2)
                 .antMatchers("/api/add").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
-                .mvcMatchers("/api/users/{userId}").hasAnyRole("ADMIN", "USER")
+                .mvcMatchers("/api/users/{userId}").hasAnyRole(ROLE1, ROLE2)
                 .anyRequest().authenticated().and().
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

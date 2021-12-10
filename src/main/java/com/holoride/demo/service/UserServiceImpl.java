@@ -1,10 +1,7 @@
 package com.holoride.demo.service;
 
-import com.holoride.demo.controller.UserController;
 import com.holoride.demo.model.User;
 import com.holoride.demo.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,9 +14,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-
 
     @Override
     public User addUser(User userToSave) {
@@ -72,8 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Long findIdByUsername(String username) {
-        Long userId = userRepository.findByUsername(username).get().getUserId();
-        return userId;
+        return userRepository.findByUsername(username).get().getUserId();
     }
 
     public Boolean isUserAllowed(Long userId, Principal principal) {
@@ -81,7 +74,7 @@ public class UserServiceImpl implements UserService {
         if  (user.isEmpty()) {
             return false;
         }
-        if (user.get().getUsername() == principal.getName()) {
+        if (user.get().getUsername().equals(principal.getName())) {
             return true;
         } else {
             return false;

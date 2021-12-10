@@ -26,6 +26,9 @@ import java.util.Optional;
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private static final String UNAUTHORIZED = "User is not authorized";
+    private static final String NOUSER = "User not found";
+
     @Autowired
     UserServiceImpl userDetailService;
 
@@ -33,26 +36,26 @@ public class UserController {
     UserRepository repository;
 
     @PostMapping(value = "/api/add", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         User addedUser;
-        if(userDetailService.doesUserExist(user.getUsername())){
+        Boolean isThereUser = userDetailService.doesUserExist(user.getUsername());
+        if(Boolean.TRUE.equals(isThereUser)){
             throw new ResourceAlreadyExists("Resource already exists in DB.");
         }
         else{
-            if(user.getPassword().isEmpty() || user.getUsername().isEmpty() )
+            if(user.getPassword().isEmpty() || user.getUsername().isEmpty())
                 throw new CustomException("Please provide username and/or password ");
-            else
-            addedUser = userDetailService.addUser(user);
+            else addedUser = userDetailService.addUser(user);
         }
+        LOGGER.info("User has been saved");
         return new ResponseEntity<>(addedUser, HttpStatus.OK);
     }
-
 
     @GetMapping("/api/users")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> userList = userDetailService.getAllUsers();
         if  (userList.isEmpty()) {
-            throw new ResourceNotFoundException("There is no user");
+            throw new ResourceNotFoundException(NOUSER);
         }else {
             return new ResponseEntity<>(userList, HttpStatus.OK);
         }
@@ -62,38 +65,41 @@ public class UserController {
     public ResponseEntity<Optional<User>> findUserById(@PathVariable("userId") long userId, Principal principal) {
             Optional<User> user = userDetailService.findUserById(userId);
         if  (user.isEmpty()) {
-            throw new ResourceNotFoundException("There is no user");
+            throw new ResourceNotFoundException(NOUSER);
         }
-        if (user.get().getUsername() == principal.getName()) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+        if (user.get().getUsername().equals(principal.getName())) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
-            throw new UnauthorizedException("User is not authorized");
+            throw new UnauthorizedException(UNAUTHORIZED);
         }
     }
 
     @PutMapping(value = "/api/users/{userId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User userToUpdate,Principal principal) {
-        if(userDetailService.isUserAllowed(userId,principal)){
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User userToUpdate,Principal principal) {
+        Boolean isThereUser = userDetailService.isUserAllowed(userId,principal);
+        if(Boolean.TRUE.equals(isThereUser)){
         User updatedUser = userDetailService.updateUser(userId, userToUpdate);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
         else{
-            throw new UnauthorizedException("User is not authorized");
+            throw new UnauthorizedException(UNAUTHORIZED);
         }
     }
 
     @DeleteMapping(value = "/api/users/{userId}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long userId, Principal principal) {
         boolean isRemoved;
-        if(userDetailService.isUserAllowed(userId,principal)){
+        Boolean isThereUser = userDetailService.isUserAllowed(userId,principal);
+        if(Boolean.TRUE.equals(isThereUser)){
             isRemoved = userDetailService.deleteUser(userId);
             if (!isRemoved) {
-                throw new ResourceNotFoundException("User is not authorized");
+                throw new ResourceNotFoundException(NOUSER);
             }
+            LOGGER.info("User has been deleted");
             return new ResponseEntity<>(userId, HttpStatus.OK);
         }
         else{
-            throw new UnauthorizedException("User is not authorized");
+            throw new UnauthorizedException(UNAUTHORIZED);
         }
     }
 

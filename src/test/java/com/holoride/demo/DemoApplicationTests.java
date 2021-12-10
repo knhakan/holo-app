@@ -55,7 +55,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(1)
-    public void T1_addUserTest_happy() throws Exception {
+     void T1_addUserTest_happy() throws Exception {
 
         MvcResult result = this.mockMvc.perform(post("/api/add")
                         .accept(MediaType.APPLICATION_JSON)
@@ -78,7 +78,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(2)
-    public void T1_addUserTest_sad_1() throws Exception {
+     void T1_addUserTest_sad_1() throws Exception {
 
         MvcResult result = this.mockMvc.perform(post("/api/add")
                         .accept(MediaType.APPLICATION_JSON)
@@ -93,7 +93,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(3)
-    public void T1_addUserTest_sad_2() throws Exception {
+     void T1_addUserTest_sad_2() throws Exception {
 
         MvcResult result = this.mockMvc.perform(post("/api/add")
                         .accept(MediaType.APPLICATION_JSON)
@@ -109,7 +109,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(4)
-    public void T1_addUserTest_sad_3() throws Exception {
+     void T1_addUserTest_sad_3() throws Exception {
 
         MvcResult result = this.mockMvc.perform(post("/api/add")
                         .accept(MediaType.APPLICATION_JSON)
@@ -124,7 +124,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(5)
-    public void T2_authenticateTest_happy() throws Exception {
+     void T2_authenticateTest_happy() throws Exception {
         MvcResult result = this.mockMvc.perform(post("/api/authenticate")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(userJSON)
@@ -143,7 +143,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(6)
-    public void T2_authenticateTest_sad() throws Exception {
+     void T2_authenticateTest_sad() throws Exception {
         MvcResult result = this.mockMvc.perform(post("/api/authenticate")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(unexistingUserJSON)
@@ -158,7 +158,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(7)
-    public void T3_getCurrentUserIdTest_happy() throws Exception {
+     void T3_getCurrentUserIdTest_happy() throws Exception {
         String accessToken = testUser.getUserToken();
         MvcResult result = this.mockMvc.perform(get("/api/user")
                         .accept(MediaType.APPLICATION_JSON)
@@ -172,7 +172,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(8)
-    public void T3_getCurrentUserIdTest_sad() throws Exception {
+     void T3_getCurrentUserIdTest_sad() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/user"))
                 .andExpect(status().isForbidden())
                 .andReturn();
@@ -185,7 +185,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(9)
-    public void T4_updateUserTest_happy() throws Exception {
+     void T4_updateUserTest_happy() throws Exception {
         String accessToken = testUser.getUserToken();
         MvcResult result = this.mockMvc.perform(put("/api/users/{userId}", testUser.getUserId())
                         .content(userJSONToUpdate)
@@ -202,7 +202,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(10)
-    public void T4_updateUserTest_sad() throws Exception {
+     void T4_updateUserTest_sad() throws Exception {
         MvcResult result = this.mockMvc.perform(put("/api/users/{userId}", testUser.getUserId()))
                 .andExpect(status().isForbidden())
                 .andReturn();
@@ -213,7 +213,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(11)
-    public void T5_getAllUsersTest_happy() throws Exception {
+     void T5_getAllUsersTest_happy() throws Exception {
         String accessToken = testUser.getUserToken();
         System.out.println(accessToken);
         MvcResult result = this.mockMvc.perform(get("/api/users")
@@ -229,7 +229,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(12)
-    public void T5_getAllUsersTest_sad() throws Exception {
+     void T5_getAllUsersTest_sad() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/users"))
                 .andExpect(status().isForbidden())
                 .andReturn();
@@ -240,7 +240,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(13)
-    public void T6_getUserByIdTest_happy() throws Exception {
+     void T6_getUserByIdTest_happy() throws Exception {
         String accessToken = testUser.getUserToken();
         MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId())
                         .accept(MediaType.APPLICATION_JSON)
@@ -255,7 +255,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(14)
-    public void T6_getUserByIdTest_sad() throws Exception {
+     void T6_getUserByIdTest_sad() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId()))
                 .andExpect(status().isForbidden())
                 .andReturn();
@@ -267,7 +267,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(16)
-    public void T7_deleteUserTest_happy() throws Exception {
+     void T7_deleteUserTest_happy() throws Exception {
         String accessToken = testUser.getUserToken();
         MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId())
                         .accept(MediaType.APPLICATION_JSON)
@@ -282,7 +282,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(15)
-    public void T7_deleteUserTest_sad_1() throws Exception {
+     void T7_deleteUserTest_sad_1() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId()))
                 .andExpect(status().isForbidden())
                 .andReturn();
@@ -295,7 +295,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(17)
-    public void T7_deleteUserTest_sad_2() throws Exception {
+     void T7_deleteUserTest_sad_2() throws Exception {
         String username = "testuser2";
         String password = "12345";
         String secondUserJSON = "{\n    \"username\" :   \"" + username + "\",\n    \"password\" :   \"" + password + "\" \n}";
@@ -321,7 +321,7 @@ class DemoApplicationTests {
      */
     @Test
     @Order(18)
-    public void T7_deleteUserTest_sad_3() throws Exception {
+     void T7_deleteUserTest_sad_3() throws Exception {
         String accessToken = testUser.getUserToken();
         MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId() + 2)
                         .accept(MediaType.APPLICATION_JSON)

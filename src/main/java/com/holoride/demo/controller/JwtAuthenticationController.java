@@ -34,13 +34,13 @@ public class JwtAuthenticationController {
     @Autowired
     UserServiceImpl userDetailService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationController.class);
 
     AuthenticationDTO authenticationDTO = new AuthenticationDTO();
 
     // it creates an authentication token to be used to log in the system
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    @PostMapping(value = "/authenticate")
+    public ResponseEntity<AuthenticationDTO> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
 
         try {
             authenticationManager.authenticate(
@@ -62,9 +62,10 @@ public class JwtAuthenticationController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> getLoggedInUser(Principal principal) {
+    public ResponseEntity<Long> getLoggedInUser(Principal principal) {
         Long userId;
-        if(userDetailService.doesUserExist(principal.getName()))
+        Boolean isThereUser = userDetailService.doesUserExist(principal.getName());
+        if(Boolean.TRUE.equals(isThereUser))
          userId = userDetailsService.findCurrentUserId(principal.getName());
         else{
             throw new ResourceNotFoundException("You are not authorized");

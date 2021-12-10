@@ -16,7 +16,6 @@ function UserDetails() {
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
     const [status, setStatus] = useState(undefined);
     const handleDelete = () => {
@@ -48,7 +47,6 @@ function UserDetails() {
             lastName: lastName,
             age: age,
             username: username,
-            password: password
         };
         axios.put(apiPrefix + `api/users/` + userId, {
             firstName: user.firstName,
