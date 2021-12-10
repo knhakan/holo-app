@@ -31,7 +31,7 @@ class DemoApplicationTests {
 
     TestUser testUser = new TestUser();
 
-    String username = "user";
+    String username = "testuser";
 
     String password = "12345";
 
@@ -290,19 +290,30 @@ class DemoApplicationTests {
     }
 
 
-    /* status code 404 not found
-       deletes a user which does not exist
+    /* status code 401 unauthorized
+       deletes a user which user does not have authorization to delete
      */
     @Test
     @Order(17)
     public void T7_deleteUserTest_sad_2() throws Exception {
+        String username = "testuser2";
+        String password = "12345";
+        String secondUserJSON = "{\n    \"username\" :   \"" + username + "\",\n    \"password\" :   \"" + password + "\" \n}";
+
+        MvcResult resultFirst = this.mockMvc.perform(post("/api/add")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(secondUserJSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
         String accessToken = testUser.getUserToken();
-        MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId() - 1)
+        MvcResult resultSecond = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId() + 1)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken))
                 .andExpect(status().isUnauthorized())
                 .andReturn();
-        System.out.println(result.getResponse().getContentAsString());
+        System.out.println(resultSecond.getResponse().getContentAsString());
     }
 
     /* status code 404 not found
@@ -312,7 +323,7 @@ class DemoApplicationTests {
     @Order(18)
     public void T7_deleteUserTest_sad_3() throws Exception {
         String accessToken = testUser.getUserToken();
-        MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId() + 1)
+        MvcResult result = this.mockMvc.perform(get("/api/users/{userId}", testUser.getUserId() + 2)
                         .accept(MediaType.APPLICATION_JSON)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken))
                 .andExpect(status().isNotFound())
