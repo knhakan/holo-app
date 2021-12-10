@@ -1,0 +1,32 @@
+name: Docker Series Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}   
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: docker build
+      run: |
+        docker build ./demo-app -t holoride_demoapp-service
+    - name: docker build demo-app
+      run: |
+        docker build ./demo-app -t demo-app_sample
+    - name: docker push
+      run: |
+        docker push holoride
+        docker push demo-app
