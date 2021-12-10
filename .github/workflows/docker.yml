@@ -14,6 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}   
@@ -21,12 +22,7 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build
-      run: |
-        docker build ./demo-app -t holoride_demoapp-service
+      run: docker-compose up -d
     - name: docker build demo-app
       run: |
         docker build ./demo-app -t demo-app_sample
-    - name: docker push
-      run: |
-        docker push holoride
-        docker push demo-app
