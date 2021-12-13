@@ -5,7 +5,6 @@ The project contains both Backend written in Java/Spring Boot and frontend writt
 For database, one in-memory database, H2, have been used.
 It is deployed onto a CI/CD pipeline installed on Github actions, Heroku.
 
-![ScreenShot](../../Screenshot 2021-12-13 at 01.24.53.png)
 ## 🚀 Technologies  
 Java 11  
 Spring Boot 2.6.1  
@@ -39,8 +38,6 @@ This will run the frontend part.
 For backend, you can simply use maven, and it will deal with all the necessary dependencies. 
 
 
-
-
 ## ✅ Requirements
 Before starting, you need to have Git and Node installed.
 
@@ -58,7 +55,3 @@ he/she should simply change the paths and the namings as desired in this command
 
 API list can be found here: https://documenter.getpostman.com/view/6429348/UVJkBYir 
 
-## Demo
-![ScreenShot](../../Screenshot 2021-12-13 at 01.18.15.png)
-![ScreenShot](../../Screenshot 2021-12-13 at 01.22.34.png)
-![ScreenShot](../../Screenshot 2021-12-13 at 01.19.27.png)
