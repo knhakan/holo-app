@@ -1,4 +1,4 @@
-# Holoride demo application
+# Simple full stack demo application with CI/CD pipeline
 
 A simple repository to implement a demo application for Holoride.   
 The project contains both Backend written in Java/Spring Boot and frontend written in ReactJs.  
@@ -26,7 +26,7 @@ Github Actions
 
 ## 👨🏻‍💻 Run Locally
 - Clone the project  
-  `git clone https://github.com/knhakan/holoride.git`  
+  `https://github.com/knhakan/holo-app.git`  
 - Go to the project directory for frontend  
   `cd demo-app`  
 - Install dependencies  
