@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/h2-console/**").permitAll() //just for test purpose
-                .antMatchers("/api/users").hasAnyRole(ROLE1, ROLE2)
+                .antMatchers("/api/users").hasAnyRole(ROLE1, ROLE2) //just for test purpose
                 .antMatchers("/api/user").hasAnyRole(ROLE1, ROLE2)
                 .antMatchers("/api/add").permitAll()
                 .antMatchers("/api/authenticate").permitAll()

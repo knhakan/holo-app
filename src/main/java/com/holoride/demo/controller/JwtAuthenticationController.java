@@ -52,9 +52,7 @@ public class JwtAuthenticationController {
         }
 
         Long userId = userDetailService.findIdByUsername(authenticationRequest.getUsername());
-
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         authenticationDTO.setAuthenticationResponse(jwt);
         authenticationDTO.setUserId(userId);

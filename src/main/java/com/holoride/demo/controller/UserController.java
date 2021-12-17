@@ -64,10 +64,11 @@ public class UserController {
     @GetMapping("/api/users/{userId}")
     public ResponseEntity<Optional<User>> findUserById(@PathVariable("userId") long userId, Principal principal) {
             Optional<User> user = userDetailService.findUserById(userId);
+        Boolean isUserAllowed = userDetailService.isUserAllowed(userId,principal);
         if  (user.isEmpty()) {
             throw new ResourceNotFoundException(NOUSER);
         }
-        if (user.get().getUsername().equals(principal.getName())) {
+        if (Boolean.TRUE.equals(isUserAllowed)) {
                 return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             throw new UnauthorizedException(UNAUTHORIZED);
@@ -76,8 +77,8 @@ public class UserController {
 
     @PutMapping(value = "/api/users/{userId}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User userToUpdate,Principal principal) {
-        Boolean isThereUser = userDetailService.isUserAllowed(userId,principal);
-        if(Boolean.TRUE.equals(isThereUser)){
+        Boolean isUserAllowed = userDetailService.isUserAllowed(userId,principal);
+        if(Boolean.TRUE.equals(isUserAllowed)){
         User updatedUser = userDetailService.updateUser(userId, userToUpdate);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
@@ -89,8 +90,8 @@ public class UserController {
     @DeleteMapping(value = "/api/users/{userId}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long userId, Principal principal) {
         boolean isRemoved;
-        Boolean isThereUser = userDetailService.isUserAllowed(userId,principal);
-        if(Boolean.TRUE.equals(isThereUser)){
+        Boolean isUserAllowed = userDetailService.isUserAllowed(userId,principal);
+        if(Boolean.TRUE.equals(isUserAllowed)){
             isRemoved = userDetailService.deleteUser(userId);
             if (!isRemoved) {
                 throw new ResourceNotFoundException(NOUSER);
