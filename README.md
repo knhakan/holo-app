@@ -1,6 +1,6 @@
 # Simple full stack demo application with CI/CD pipeline
 
-A simple repository to implement a demo application for Holoride.   
+A simple repository to implement a demo application.   
 The project contains both Backend written in Java/Spring Boot and frontend written in ReactJs.  
 For database, one in-memory database, H2, have been used.
 It is deployed onto a CI/CD pipeline installed on Github actions, Heroku.
